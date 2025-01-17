@@ -1,0 +1,79 @@
+-- consultas SQL
+
+
+-- 1
+SELECT nomeMarinheiro, idade  
+FROM Marinheiro;
+
+-- 2
+select * 
+FROM Marinheiro 
+WHERE avaliacao = "bom";
+
+-- 3. Encontre os nomes de marinheiros que reservaram o barco 103
+
+SELECT m.nomeMarinheiro 
+from Marinheiro m, barco b, Reserva r 
+where m.idMarinheiro = r.idMarinheiro AND 
+b.idBarco = r.idBarco AND 
+b.idBarco = 103;
+
+SELECT m.nomeMarinheiro 
+from marinheiro m 
+join Reserva r on m.idMarinheiro = r.idMarinheiro 
+join barco b on b.idBarco = r.idBarco
+where b.idBarco = 103;
+
+-- 4. Encontre os idMarinheiro dos marinheiros que reservaram um 
+-- barco vermelho
+
+SELECT r.idMarinheiro 
+from Reserva r 
+join barco b on r.idBarco = b.idBarco 
+where b.cor = 'vermelho';
+
+-- 5. Encontre os nomes dos marinheiros que reservaram 
+-- um barco vermelho
+
+SELECT DISTINCT m.nomeMarinheiro 
+from Reserva r 
+join Marinheiro m on m.idMarinheiro = r.idMarinheiro 
+join barco b on r.idBarco = b.idBarco 
+where b.cor = 'vermelho';
+
+-- 6. Encontre as cores dos barcos reservados por Lubber
+
+select b.cor 
+from barco b 
+join Reserva r on b.idBarco = r.idBarco 
+join Marinheiro m on m.idMarinheiro = r.idMarinheiro 
+where m.nomeMarinheiro = "Lubber";
+
+-- 7. Encontre os nomes dos marinheiros que reservaram 
+-- pelo menos um barco
+
+select distinct m.idMarinheiro, m.nomeMarinheiro 
+from marinheiro m 
+join Reserva r on r.idMarinheiro = m.idMarinheiro; 
+
+-- 8. Encontre as idades dos marinheiros cujos nomes 
+-- começam ou terminam com B e têm no mínimo três caracteres.
+
+select idade, nomeMarinheiro  
+from Marinheiro 
+where nomeMarinheiro like 'B__%' or nomeMarinheiro like '%__b';
+
+-- 9. Encontre a idade média de todos os marinheiros
+select avg(idade)
+from Marinheiro;
+
+-- 10. Encontre a idade média dos marinheiros com idade maior que 27
+select avg(idade) 
+from Marinheiro 
+where idade > 27;
+
+-- 11.  Encontre a quantidade total de marinheiros
+select count(*) from Marinheiro;
+
+-- 12.  Encontre o número de nomes diferentes de marinheiros
+select count( distinct (nomeMarinheiro)) from Marinheiro;
