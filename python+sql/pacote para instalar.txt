@@ -1,0 +1,3 @@
+pip instalar sqlalchemy;
+pip instalar python-dotenv;
+pip instalar pymysql;

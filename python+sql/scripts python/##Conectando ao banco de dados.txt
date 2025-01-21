@@ -1,0 +1,177 @@
+1--- 
+
+##Conectando ao banco de dados
+importar sqlalchemy
+de dotenv importar load_dotenv
+importar sistema operacional
+
+load_dotenv() # Esta linha traz todas as variáveis ​​de ambiente de .env para os.environ
+
+#engine = sqlalchemy.create_engine('postgresql://nomedeusuário:senha@localhost/meubancodedados')
+motor = sqlalchemy.create_engine(os.environ['CONN_PARAM'])  
+conexão = engine.connect()  
+
+##Acessando informações de metadados do banco de dados
+conexão = engine.connect()  
+metadados = sqlalchemy.MetaData()  
+marinheiro = sqlalchemy.Table('Marinheiro', metadata, autoload_with=engine)  
+  
+imprimir(marinheiro.columns.keys())  
+print(repr(metadata.tables['Marinheiro']))
+
+
+2---
+
+import sqlalchemy 
+from dotenv import load_dotenv
+import os 
+from pprint import pprint  
+
+load_dotenv()
+
+engine = sqlalchemy.create_engine(os.environ['CONN_PARAM'])   
+connection = engine.connect()  
+metadata = sqlalchemy.MetaData()  
+marinheiro = sqlalchemy.Table('Marinheiro', metadata, autoload_with=engine)  
+
+##SELECT * FROM Cliente;  
+query = sqlalchemy.select(marinheiro)  
+result_proxy = connection.execute(query)  
+  
+result_set = result_proxy.fetchall() 
+#result_set = result_proxy.fetchmany(5)
+ 
+pprint(result_set)
+
+3---
+
+import sqlalchemy 
+from dotenv import load_dotenv
+import os 
+from pprint import pprint  
+
+load_dotenv()
+
+engine = sqlalchemy.create_engine(os.environ['CONN_PARAM'])  
+connection = engine.connect()  
+metadata = sqlalchemy.MetaData()  
+barco = sqlalchemy.Table('barco', metadata, autoload_with=engine)
+marinheiro =  sqlalchemy.Table('Marinheiro', metadata, autoload_with=engine)
+
+##SELECT * FROM barco WHERE nomeBarco = "Interlake";
+#query = sqlalchemy.select(barco).where(barco.columns.nomeBarco == 'Interlake')
+
+##SELECT * FROM barco WHERE nomeBarco IN ("Interlake", "Marine");
+#query = sqlalchemy.select(barco).where(barco.columns.nomeBarco.in_(["Interlake", "Marine"]))
+
+##SELECT * FROM Marinheiro WHERE idade < 40 AND avaliacao = "bom";
+#query = sqlalchemy.select(marinheiro).where(sqlalchemy.and_(marinheiro.columns.idade < 40, marinheiro.columns.avaliacao == "bom"))
+
+##SELECT * FROM Marinheiro WHERE idade < 40 AND NOT avaliacao = "bom";
+#query = sqlalchemy.select(marinheiro).where(sqlalchemy.and_(marinheiro.columns.idade < 40, marinheiro.columns.avaliacao != "bom"))
+
+##SELECT * FROM Marinheiro ORDER BY nomeMarinheiro ASC;
+#query = sqlalchemy.select(marinheiro).order_by(sqlalchemy.asc(marinheiro.columns.nomeMarinheiro))
+
+##SELECT SUM(idade) FROM Marinheiro;
+#query = sqlalchemy.select(sqlalchemy.func.sum(marinheiro.columns.idade))
+
+result_proxy = connection.execute(query)    
+result_set = result_proxy.fetchall() 
+pprint(result_set)
+
+4---
+
+import sqlalchemy 
+from dotenv import load_dotenv
+import os  
+
+load_dotenv()
+  
+engine = sqlalchemy.create_engine(os.environ['CONN_PARAM']) 
+connection = engine.connect()  
+metadata = sqlalchemy.MetaData()  
+  
+newTable = sqlalchemy.Table('newTable', metadata,  
+	           sqlalchemy.Column('Id', sqlalchemy.Integer()),  
+	           sqlalchemy.Column('name', sqlalchemy.String(255), nullable=False),  
+	           sqlalchemy.Column('salary', sqlalchemy.Float(), default=100.0),  
+	           sqlalchemy.Column('active', sqlalchemy.Boolean(), default=True)  
+	  )  
+  
+metadata.create_all(engine)
+
+5---
+
+importar sqlalchemy
+de dotenv importar load_dotenv
+importar sistema operacional  
+
+carregar_dotenv()  
+  
+motor = sqlalchemy.create_engine(os.environ['CONN_PARAM'])
+conexão = engine.connect()  
+metadados = sqlalchemy.MetaData()  
+  
+newTable = sqlalchemy.Table('newTable', metadados, autoload_with=engine)  
+  
+consulta = sqlalchemy.insert(newTable).values(Id=1, nome='Software Ninjaneer', salário=60000,00, ativo=True)  
+result_proxy = conexão.execute(consulta)  
+
+6---
+
+importar sqlalchemy
+de dotenv importar load_dotenv
+importar sistema operacional  
+
+carregar_dotenv()   
+  
+motor = sqlalchemy.create_engine(os.environ['CONN_PARAM'])
+conexão = engine.connect()  
+metadados = sqlalchemy.MetaData()  
+  
+newTable = sqlalchemy.Table('newTable', metadados, autoload_with=engine)  
+  
+consulta = sqlalchemy.insert(novaTabela)  
+novos_registros = [{'Id':'2', 'nome':'registro1', 'salário':80000, 'ativo':Falso},  
+               {'Id':'3', 'nome':'registro2', 'salário':70000, 'ativo':Verdadeiro}]  
+result_proxy = conexão.execute(consulta,novos_registros)  
+
+7---
+
+importar sqlalchemy
+de dotenv importar load_dotenv
+importar sistema operacional  
+
+carregar_dotenv()  
+  
+motor = sqlalchemy.create_engine(os.environ['CONN_PARAM'])  
+conexão = engine.connect()  
+metadados = sqlalchemy.MetaData()  
+  
+newTable = sqlalchemy.Table('newTable', metadados, carregamento automático=True, carregamento automático_com=engine)  
+  
+consulta = sqlalchemy.update(novaTabela).valores(salário=100000).onde(novaTabela.colunas.Id == 1)  
+  
+resultado = conexão.execute(consulta)
+
+8---
+
+import sqlalchemy 
+from dotenv import load_dotenv
+import os  
+
+load_dotenv()  
+  
+engine = sqlalchemy.create_engine(os.environ['CONN_PARAM'])  
+connection = engine.connect()  
+metadata = sqlalchemy.MetaData()  
+  
+newTable = sqlalchemy.Table('newTable', metadata, autoload=True, autoload_with=engine)  
+  
+query = sqlalchemy.delete(newTable).where(newTable.columns.salary < 100000)  
+results = connection.execute(query)
+
+
+
+
