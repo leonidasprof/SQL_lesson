@@ -18,7 +18,7 @@ O objetivo deste repositório é oferecer um ambiente organizado para:
 ## 🗂️ **Estrutura do Repositório**
 O repositório está organizado da seguinte forma:
 
-- **`/aulas`**: Contém os scripts das aulas divididos por temas. Cada arquivo é um módulo ou tópico específico do curso.
+- **`/query`**: Cada arquivo é um exercício/consulta específica.
 - **`/testes`**: Scripts com questões práticas para avaliar o conhecimento em SQL.
 - **`/scripts-extras`**: Scripts adicionais, como criação de tabelas e inserção de dados, para facilitar a execução das aulas e testes.
 
